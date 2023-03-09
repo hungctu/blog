@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>ZenBlog Bootstrap Template - Index</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS Files -->
+  <link href="assets/css/variables.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: ZenBlog - v1.3.0
+  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+  * Author: BootstrapMade.com
+  * License: https:///bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+    <a th:href="@{/index}" class="logo d-flex align-items-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1>ZenBlog</h1>
+    </a>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a th:href="@{/index}">Trang chủ</a></li>
+        <li><a th:href="@{/danhsachcd}">Chủ đề</a></li>
+        <li><a th:href="@{/danhsachtl}">Thể loại</a></li>
+        <li class="dropdown"><a href="#">
+          <img th:src="@{${'photo/' +nguoidung.Hinh_ND}}" alt="" style="height: 30px;width: 30px" class="rounded-circle"></a>
+          <ul>
+            <li><a th:href="@{/ttnguoidung(userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">Thông tin người dùng</a></li>
+            <li><a th:href="@{/dsdausach(userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">Danh sách đầu sách</a></li>
+            <li>
+              <a href="javascript: document.logoutform.submit()">Đăng xuất</a>
+              <form name="logoutform" th:action="@{/logout}" method="post" th:hiden="true">
+                <input hidden type="submit" value="Đăng xuất">
+              </form>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav><!-- .navbar -->
+
+    <div class="position-relative">
+      <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+      <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+      <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+      <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+
+      <!-- ======= Search Form ======= -->
+      <div class="search-form-wrap js-search-form-wrap">
+        <form th:action="@{/timkiem}" method="get" class="search-form">
+          <button style="border:none;background-color:white" type="submit" class="icon bi-search"></button>
+          <input type="text" name="timkiem" placeholder="Search" class="form-control">
+          <button class="btn js-search-close" type="submit"><span class="bi-x"></span></button>
+        </form>
+      </div><!-- End Search Form -->
+
+    </div>
+
+  </div>
+
+</header><!-- End Header -->
+
+<main id="main">
+  <section>
+    <div class="container" >
+      <div class="row">
+
+        <div class="col-md-8" data-aos="fade-up" style="margin: auto">
+          <div class="d-md-flex post-entry-2 half" style="border: thin solid black;border-radius: 20px; background:white">
+            <div class="col-md-3" data-aos="fade-up" style="margin-left:20px;margin-top:20px;margin-bottom:20px">
+              <img th:src="@{${'photo/' +ds.HINH_SACH}}" alt="" class="img-fluid">
+            </div>
+            <div>
+              <div class="cols-sm-5" data-aos="fade-up" style="margin-top:20px;margin-bottom:20px;margin-left: 40px;margin-right: 10px">
+                <h1 align="left" th:text="${ds.TEN_SACH}"></h1>
+                <div class="d-flex align-items-center author" align="left">
+                  <div class="name">
+                    <table>
+                      <th>
+                      <td th:each =" tl : ${ds.getTlDs()}">
+                        <a style="margin-right: 10px;color: #0a53be" th:href="@{/theloai(tlid=${tl.theLoai.getID_TL})}" >
+                          <button type="button" class="btn btn-light rounded-pill" th:text="${tl.theLoai.getTEN_TL()}"></button>
+                        </a>
+                      </td>
+                      </th>
+                    </table>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center author" align="left">
+                  <div class="name">
+                    <h3 class="m-0 p-0"> <img src="assets/img/eye.png" alt=""> &nbsp <th th:text="${tong}"></th></h3>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center author" align="left">
+                  <div class="name">
+                    <h3 class="m-0 p-0"> <img src="assets/img/like.png" alt=""> &nbsp <th th:text="${ds.getLUOT_LIKE()}"></th></h3>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center author" align="left">
+                  <div class="name">
+                    <h3 class="m-0 p-0"> <img src="assets/img/dislike.png" alt=""> &nbsp <th th:text="${ds.getLUOT_DISLIKE()}"></th></h3>
+                  </div>
+                </div>
+                <a th:href="@{/suadausach(dsid=${ds.ID_SACH},userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">
+                  <button class="btn btn-primary" style="margin:auto;width: 100%" type="button">Sửa đầu sách</button>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="cols-sm-5">
+            <div class="cols-sm-5" style="margin-top: 15px">
+              <p th:utext="${ds.TOM_TAT}">
+              </p>
+            </div>
+            <table>
+
+              <th>
+              <td th:each =" cd : ${ds.getCdDs()}" >
+                <a style="margin-right: 10px;color: #0a53be" th:href="@{/chude(cdid=${cd.chuDe.getID_CD})}">
+                  <button type="button" class="btn btn-dark rounded-pill" th:text="${cd.chuDe.getTEN_CD()}"></button>
+                </a>
+              </td>
+              </th>
+            </table>
+          </div>
+
+          <div class="cols-sm-5" style="margin-top: 15px;border: thin solid black;border-radius: 20px; background:white">
+            <a th:href="@{/themchap(dsid=${ds.ID_SACH},userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">
+              <button type="button" class="btn btn-primary btn-sm" style="margin-top: 20px;margin-left: 20px">Thêm chap mới</button>
+            </a>
+            <div class="card-body" style="margin-top: 5px;margin-left: 20px;margin-right: 20px">
+              <!-- Default Table -->
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tên Chap</th>
+                  <th scope="col">Ngày đăng</th>
+                  <th scope="col">Số lượt xem</th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="chapter : ${ds.chapters}">
+                  <th scope="row"th:text="${ds.chapters.indexOf(chapter)+1}"></th>
+                  <td th:text="${chapter.TEN_CHAPTER}"></td>
+                  <td style="margin-right: 10px" th:text="${#dates.format(chapter.NGAY_DANG,'dd/MMM/yyyy')}"></td>
+                  <td th:text="${chapter.LUOT_XEM}"></td>
+                  <td>
+                    <a th:href="@{/suachap(chapid=${chapter.ID_CHAPTER},userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP},dsid=${ds.ID_SACH})}">
+                      <button type="button" class="btn btn-primary btn-sm">Cập nhật</button>
+                    </a>
+                  </td>
+                </tr>
+
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer th:replace="fragments :: footer" >
+</footer>
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

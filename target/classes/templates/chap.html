@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>ZenBlog Bootstrap Template - Category</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS Files -->
+  <link href="assets/css/variables.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: ZenBlog - v1.3.0
+  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+  * Author: BootstrapMade.com
+  * License: https:///bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+    <a th:href="@{/index}" class="logo d-flex align-items-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1>ZenBlog</h1>
+    </a>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a th:href="@{/index}">Trang chủ</a></li>
+        <li><a th:href="@{/danhsachcd}">Chủ đề</a></li>
+        <li><a th:href="@{/danhsachtl}">Thể loại</a></li>
+        <th th:if="${nd} == null">
+          <li><a th:href="@{/login}">Đăng nhập</a></li>
+          <li><a th:href="@{/register}">Đăng ký</a></li>
+        </th>
+        <th th:unless="${nd} == null">
+          <li class="dropdown"><a th:href="@{/ttnguoidung(userid=${nd.ID_NGUOI_DUNG},username=${nd.TEN_DANG_NHAP})}">
+            <img th:src="@{${'photo/' +nd.Hinh_ND}}" alt="" style="height: 30px;width: 30px" class="rounded-circle"></a>
+            <ul>
+              <li><a th:href="@{/ttnguoidung(userid=${nd.ID_NGUOI_DUNG},username=${nd.TEN_DANG_NHAP})}">Thông tin người dùng</a></li>
+              <li><a th:href="@{/dsdausach(userid=${nd.ID_NGUOI_DUNG})}">Danh sách đầu sách</a></li>
+              <li>
+                <a href="javascript: document.logoutform.submit()">Đăng xuất</a>
+                <form name="logoutform" th:action="@{/logout}" method="post" th:hiden="true">
+                  <input hidden type="submit" value="Đăng xuất">
+                </form>
+              </li>
+            </ul>
+          </li>
+        </th>
+      </ul>
+    </nav><!-- .navbar -->
+
+    <div class="position-relative">
+      <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+      <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+      <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+      <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+
+      <!-- ======= Search Form ======= -->
+      <div class="search-form-wrap js-search-form-wrap">
+        <form th:action="@{/timkiem}" method="get" class="search-form">
+          <button style="border:none;background-color:white" type="submit" class="icon bi-search"></button>
+          <input type="text" name="timkiem" placeholder="Search" class="form-control">
+          <button class="btn js-search-close" type="submit"><span class="bi-x"></span></button>
+        </form>
+      </div><!-- End Search Form -->
+
+    </div>
+
+  </div>
+
+</header><!-- End Header -->
+
+<main id="main">
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8" data-aos="fade-up">
+          <div>
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/index}">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/dausach(dsid=${ds.ID_SACH})}" th:text="${ds.TEN_SACH}"></a></li>
+                <li class="breadcrumb-item active" th:text="${chap.TEN_CHAPTER}"></li>
+              </ol>
+            </nav>
+          </div>
+
+          <div class="d-md-flex post-entry-2 half">
+              <div class="btn-group" role="group" style="margin: auto">
+              <a th:if="${ds.getChapters().indexOf(chap)}>0" th:href="@{/chapter(dsid=${ds.ID_SACH},chapid=${ds.chapters.get(ds.getChapters().indexOf(chap)-1).getID_CHAPTER()})}">
+                <button type="button" class="btn btn-primary">Prev</button>
+              </a>
+              <a th:unless="${ds.getChapters().indexOf(chap)}>0">
+                  <button type="button" class="btn btn-primary" disabled>Prev</button>
+              </a>
+              <select class="form-select" onchange="window.location.href=this.value" style="width: 300px">
+                <option th:each="dschap : ${chapterlist}" th:text="${dschap.TEN_CHAPTER}"
+                        th:value="@{/chapter(dsid=${ds.ID_SACH},chapid=${dschap.ID_CHAPTER})}"
+                        th:selected="${chap.ID_CHAPTER}==${dschap.ID_CHAPTER}"></option>
+              </select>
+              <a      th:if="${ds.getChapters().indexOf(chap)}<${ds.chapters.size()-1}"
+                      th:href="@{/chapter(dsid=${ds.ID_SACH},chapid=${ds.chapters.get(ds.getChapters().indexOf(chap)+1).getID_CHAPTER()})}">
+                <button type="button" class="btn btn-primary">Next</button>
+              </a>
+              <a th:unless="${ds.getChapters().indexOf(chap)}<${ds.chapters.size()-1}">
+                  <button type="button" class="btn btn-primary" disabled>Next</button>
+              </a>
+            </div>
+          </div>
+
+          <div class="d-md-flex post-entry-2 half" style="margin-top: 15px;border: thin solid black;border-radius: 10px; background:white">
+            <div style="margin-left: 20px; margin-right: 20px;margin-top: 10px;margin-bottom: 15px">
+              <th th:utext="${chap.NOI_DUNG}"></th>
+            </div>
+
+          </div>
+
+          <div class="d-md-flex post-entry-2 half">
+            <div class="btn-group" role="group" style="margin: auto">
+              <a th:if="${ds.getChapters().indexOf(chap)}>0" th:href="@{/chapter(dsid=${ds.ID_SACH},chapid=${ds.chapters.get(ds.getChapters().indexOf(chap)-1).getID_CHAPTER()})}">
+                <button type="button" class="btn btn-primary">Prev</button>
+              </a>
+              <a th:unless="${ds.getChapters().indexOf(chap)}>0">
+                <button type="button" class="btn btn-primary" disabled>Prev</button>
+              </a>
+              <select class="form-select" onchange="window.location.href=this.value" style="width: 300px" >
+                <option th:each="dschap : ${chapterlist}" th:text="${dschap.TEN_CHAPTER}"
+                        th:value="@{/chapter(dsid=${ds.ID_SACH},chapid=${dschap.ID_CHAPTER})}"
+                        th:selected="${chap.ID_CHAPTER}==${dschap.ID_CHAPTER}"></option>
+              </select>
+              <a      th:if="${ds.getChapters().indexOf(chap)}<${ds.chapters.size()-1}"
+                      th:href="@{/chapter(dsid=${ds.ID_SACH},chapid=${ds.chapters.get(ds.getChapters().indexOf(chap)+1).getID_CHAPTER()})}">
+                <button type="button" class="btn btn-primary">Next</button>
+              </a>
+              <a th:unless="${ds.getChapters().indexOf(chap)}<${ds.chapters.size()-1}">
+                <button type="button" class="btn btn-primary" disabled>Next</button>
+              </a>
+            </div>
+          </div>
+
+          <!-- ======= Comments Form ======= -->
+
+          <div class="row justify-content-center mt-5">
+            <div class="col-lg-12">
+              <h5 class="comment-title">Comment</h5>
+              <form th:action="@{/comment}" method="get">
+                <div class="row">
+                    <input type="hidden" name="ID_CHAPTER" th:value="${chapid}">
+                    <input type="hidden" name="ID_NGUOI_DUNG" th:value="${nd}!=null?${nd.ID_NGUOI_DUNG}:0">
+                    <input type="hidden" name="dsid" th:value="${dsid}">
+                    <div class="col-12 mb-3">
+                      <label for="comment-message">Message</label>
+                      <textarea class="form-control" id="comment-message" name="NOI_DUNG_BL" placeholder="Nhập bình luận của bạn" cols="20" rows="5" required></textarea>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary" >Đăng</button>
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- End Comments Form -->
+
+          <!-- ======= Comments ======= -->
+          <div class="comments" >
+            <h5 class="comment-title py-4"><th th:text="${binhluans.size()}"></th> Comments</h5>
+            <div class="comment d-flex" th:if="${binhluans.size()}>0" th:each="bl:${binhluans}" style="margin-bottom: 30px">
+              <div class="flex-shrink-0">
+                <div class="avatar avatar-sm rounded-circle">
+                  <img class="avatar-img" th:src="@{${'photo/' +bl.getNguoiDung().hinh_ND}}" alt="">
+                </div>
+              </div>
+              <div class="flex-shrink-1 ms-2 ms-sm-3">
+                <div class="comment-meta d-flex">
+                  <h6 class="me-2" th:text="${bl.getNguoiDung().TEN_NGUOI_DUNG}"></h6>
+                  <span class="text-muted" th:text="${#dates.format(bl.NGAY_BL,'HH:mm, dd/MMM/yyyy ')}"></span>
+                </div>
+                <div class="comment-body" th:utext="${bl.NOI_DUNG_BL}" >
+                </div>
+              </div>
+            </div>
+          </div><!-- End Comments -->
+        </div>
+
+        <div class="col-md-3">
+          <!-- ======= Sidebar ======= -->
+          <div class="aside-block">
+
+            <div class="tab-content">
+              <!-- Popular -->
+              <h3>Bài viết nhiều người đọc</h3></br>
+              <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+                <div class="post-entry-1 border-bottom" th:each="dshot:${hot}">
+                  <h2 class="mb-2"><a href="#" th:text="${dshot.TEN_SACH}"></a></h2>
+                  <span class="author mb-3 d-block" th:text="${dshot.nguoiDung.getTEN_NGUOI_DUNG()}"></span>
+                </div>
+
+              </div> <!-- End Popular -->
+
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer th:replace="fragments :: footer" >
+</footer>
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

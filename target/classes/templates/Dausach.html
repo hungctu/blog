@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>ZenBlog Bootstrap Template - Category</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS Files -->
+  <link href="assets/css/variables.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: ZenBlog - v1.3.0
+  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+  * Author: BootstrapMade.com
+  * License: https:///bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a th:href="@{/index}" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1>ZenBlog</h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a th:href="@{/index}">Trang chủ</a></li>
+          <li><a th:href="@{/danhsachcd}">Chủ đề</a></li>
+          <li><a th:href="@{/danhsachtl}">Thể loại</a></li>
+          <th th:if="${nd} == null">
+            <li><a th:href="@{/login}">Đăng nhập</a></li>
+            <li><a th:href="@{/register}">Đăng ký</a></li>
+          </th>
+          <th th:unless="${nd} == null">
+            <li class="dropdown"><a th:href="@{/ttnguoidung(userid=${nd.ID_NGUOI_DUNG},username=${nd.TEN_DANG_NHAP})}">
+              <img th:src="@{${'photo/' +nd.Hinh_ND}}" alt="" style="height: 30px;width: 30px" class="rounded-circle"></a>
+              <ul>
+                <li><a th:href="@{/ttnguoidung(userid=${nd.ID_NGUOI_DUNG},username=${nd.TEN_DANG_NHAP})}">Thông tin người dùng</a></li>
+                <li><a th:href="@{/dsdausach(userid=${nd.ID_NGUOI_DUNG})}">Danh sách đầu sách</a></li>
+                <li>
+                  <a href="javascript: document.logoutform.submit()">Đăng xuất</a>
+                  <form name="logoutform" th:action="@{/logout}" method="post" th:hiden="true">
+                    <input hidden type="submit" value="Đăng xuất">
+                  </form>
+                </li>
+              </ul>
+            </li>
+          </th>
+        </ul>
+      </nav><!-- .navbar -->
+
+      <div class="position-relative">
+        <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+        <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+        <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+        <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+
+        <!-- ======= Search Form ======= -->
+        <div class="search-form-wrap js-search-form-wrap">
+          <form th:action="@{/timkiem}" method="get" class="search-form">
+            <button style="border:none;background-color:white" type="submit" class="icon bi-search"></button>
+            <input type="text" name="timkiem" placeholder="Search" class="form-control">
+            <button class="btn js-search-close" type="submit"><span class="bi-x"></span></button>
+          </form>
+        </div><!-- End Search Form -->
+
+      </div>
+
+    </div>
+
+  </header><!-- End Header -->
+
+  <main id="main">
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8" data-aos="fade-up">
+            <div class="d-md-flex post-entry-2 half" style="border: thin solid black;border-radius: 20px; background:white">
+				<div class="col-md-3" data-aos="fade-up" style="margin-left:20px;margin-top:20px;margin-bottom:20px">
+				   <img th:src="@{${'photo/' +ds.HINH_SACH.trim()}}" alt="" class="img-fluid">
+				 </div>
+				<div>
+				<div class="cols-sm-5" data-aos="fade-up" style="margin-top:20px;margin-bottom:20px;margin-left: 40px;margin-right: 10px">
+					<h1 align="left" th:text="${ds.TEN_SACH}"></h1>
+                    <div class="d-flex align-items-center author" align="left">
+                      <div class="name">
+                        <table>
+                          <th>
+                          <td th:each =" tl : ${ds.getTlDs()}">
+                            <a style="margin-right: 10px;color: #0a53be" th:href="@{/theloai(tlid=${tl.theLoai.getID_TL})}" >
+                              <button type="button" class="btn btn-light rounded-pill" th:text="${tl.theLoai.getTEN_TL()}"></button>
+                            </a>
+                          </td>
+                          </th>
+                        </table>
+                      </div>
+                    </div>
+					<div class="d-flex align-items-center author" align="left">
+					  <div class="name">
+						<h3 class="m-0 p-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                          </svg> &nbsp <th th:text="${tong}"></th>
+                        </h3>
+					  </div>
+					</div>
+
+					<div class="d-flex align-items-center author" align="left">
+					  <div class="name">
+                        <a th:href="@{/dausach/like(dsid=${dsid},userid=${nd.ID_NGUOI_DUNG})}">
+                          <h3 class="m-0 p-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red" class="bi bi-emoji-smile-fill" viewBox="0 0 16 16">
+                              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
+                            </svg> &nbsp <th th:text="${like}"></th>
+                          </h3>
+                        </a>
+					  </div>
+					</div>
+					<div class="d-flex align-items-center author" align="left">
+					  <div class="name">
+                        <a  th:href="@{/dausach/dislike(dsid=${dsid},userid=${nd.ID_NGUOI_DUNG})}">
+                          <h3 class="m-0 p-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red" class="bi bi-emoji-frown-fill" viewBox="0 0 16 16">
+                              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm-2.715 5.933a.5.5 0 0 1-.183-.683A4.498 4.498 0 0 1 8 9.5a4.5 4.5 0 0 1 3.898 2.25.5.5 0 0 1-.866.5A3.498 3.498 0 0 0 8 10.5a3.498 3.498 0 0 0-3.032 1.75.5.5 0 0 1-.683.183zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
+                            </svg> &nbsp <th th:text="${dislike}"></th>
+                          </h3>
+                        </a>
+					  </div>
+					</div>
+
+                    <a th:href="@{/chapter(dsid=${ds.ID_SACH},chapid=${ds.chapters.get(0).getID_CHAPTER()})}">
+					 <button class="btn btn-primary" style="margin:auto;width: 100%" type="button">Bắt đầu đọc</button>
+                    </a>
+				</div>
+				</div>
+            </div>
+
+            <div class="cols-sm-5">
+              <a th:href="@{/dausach_tacgia(userid=${ds.nguoiDung.getID_NGUOI_DUNG()})}" class="comment d-flex">
+                <div class="flex-shrink-0">
+                  <div class="avatar avatar-sm rounded-circle">
+                    <img class="avatar-img" th:src="@{${'photo/' +ds.nguoiDung.Hinh_ND}}" alt="">
+                  </div>
+                </div>
+                <div class="flex-shrink-1 ms-2 ms-sm-3">
+                  <div class="comment-meta d-flex">
+                    <h6 class="me-2" th:text="${ds.nguoiDung.getTEN_NGUOI_DUNG()}"></h6>
+                  </div>
+                </div>
+              </a>
+              <div class="cols-sm-5" style="margin-top: 15px">
+                <p th:utext="${ds.TOM_TAT}">
+                </p>
+              </div>
+                <table>
+                  <th>
+                  <td th:each =" cd : ${ds.getCdDs()}" >
+                    <a style="margin-right: 10px;color: #0a53be" th:href="@{/chude(cdid=${cd.chuDe.getID_CD})}">
+                      <button type="button" class="btn btn-dark rounded-pill" th:text="${cd.chuDe.getTEN_CD()}"></button>
+                    </a>
+                  </td>
+                  </th>
+                </table>
+              </div>
+
+            <div class="cols-sm-5" style="margin-top: 15px;border: thin solid black;border-radius: 20px; background:white">
+              <h2 align="left" style="margin-top: 5px;margin-left: 20px">Danh Sách</h2>
+              <span style="margin-left: 20px">Ngày cập nhật gần nhất
+                <th th:text="${#dates.format(ds.getChapters().get(ds.getChapters().size()-1).getNGAY_DANG(),'dd/MMM/yyyy')}"
+              /></span>
+              <div class="card-body" style="margin-top: 5px;margin-left: 20px;margin-right: 20px">
+                  <!-- Default Table -->
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                      <th scope="col" align="right"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="chapter : ${ds.chapters}">
+
+                        <th scope="row"th:text="${ds.chapters.indexOf(chapter)+1}"></th>
+                        <td ><a th:href="@{/chapter(dsid=${ds.ID_SACH},chapid=${chapter.ID_CHAPTER})}" th:text="${chapter.TEN_CHAPTER}"></a></td>
+                        <td align="right"  style="margin-right: 10px"
+                            th:text="${#dates.format(chapter.NGAY_DANG,'dd/MMM/yyyy')}"
+                        ></td>
+
+                    </tr>
+
+                    </tbody>
+                  </table>
+                  <!-- End Default Table Example -->
+              </div>
+
+            </div>
+            
+          </div>
+
+          <div class="col-md-3">
+            <!-- ======= Sidebar ======= -->
+            <div class="aside-block">
+
+              <div class="tab-content">
+                <!-- Popular -->
+                <h3>Bài viết nhiều người đọc</h3></br>
+                <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+                  <div class="post-entry-1 border-bottom" th:each="dshot:${hot}">
+                    <h2 class="mb-2"><a th:href="@{/dausach(dsid=${dshot.ID_SACH})}" th:text="${dshot.TEN_SACH}"></a></h2>
+                    <span class="author mb-3 d-block" th:text="${dshot.nguoiDung.getTEN_NGUOI_DUNG()}"></span>
+                  </div>
+
+                </div> <!-- End Popular -->
+
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer th:replace="fragments :: footer" >
+  </footer>
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

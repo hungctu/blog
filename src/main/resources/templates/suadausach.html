@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>ZenBlog Bootstrap Template - Index</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS Files -->
+    <link href="assets/css/variables.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: ZenBlog - v1.3.0
+    * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+    * Author: BootstrapMade.com
+    * License: https:///bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <a th:href="@{/index}" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>ZenBlog</h1>
+        </a>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a th:href="@{/index}">Trang chủ</a></li>
+                <li><a th:href="@{/danhsachcd}">Chủ đề</a></li>
+                <li><a th:href="@{/danhsachtl}">Thể loại</a></li>
+                <li class="dropdown"><a href="#">
+                    <img th:src="@{${'photo/' +nguoidung.Hinh_ND}}" alt="" style="height: 30px;width: 30px" class="rounded-circle"></a>
+                    <ul>
+                        <li><a th:href="@{/ttnguoidung(userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">Thông tin người dùng</a></li>
+                        <li><a th:href="@{/dsdausach(userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">Danh sách đầu sách</a></li>
+                        <li>
+                            <a href="javascript: document.logoutform.submit()">Đăng xuất</a>
+                            <form name="logoutform" th:action="@{/logout}" method="post" th:hiden="true">
+                                <input hidden type="submit" value="Đăng xuất">
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav><!-- .navbar -->
+
+        <div class="position-relative">
+            <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+            <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+            <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+            <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+
+            <!-- ======= Search Form ======= -->
+            <div class="search-form-wrap js-search-form-wrap">
+                <form th:action="@{/timkiem}" method="get" class="search-form">
+                    <button style="border:none;background-color:white" type="submit" class="icon bi-search"></button>
+                    <input type="text" name="timkiem" placeholder="Search" class="form-control">
+                    <button class="btn js-search-close" type="submit"><span class="bi-x"></span></button>
+                </form>
+            </div><!-- End Search Form -->
+
+        </div>
+
+    </div>
+
+</header><!-- End Header -->
+
+<main id="main">
+    <section>
+        <div class="container" >
+            <div class="row">
+                <div class="col-md-9" style="margin: auto">
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/index}">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/dsdausach(userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">Danh sách bài viết</a></li>
+                            <li class="breadcrumb-item">Sửa bài viết</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-9" data-aos="fade-up" style="margin: auto;border: thin solid black;border-radius: 20px; background:white">
+                    <form th:action="@{/suadausach/save}" method="post" enctype="multipart/form-data">
+                        <input type="hidden"  name="userid" th:value="${nguoidung.ID_NGUOI_DUNG}">
+                        <input type="hidden"  name="username" th:value="${nguoidung.TEN_DANG_NHAP}">
+                        <input type="hidden"  name="ID_SACH" th:value="${ds.ID_SACH}">
+                        <div class="d-md-flex post-entry-2 half" >
+                        <div class="cols-sm-2" data-aos="fade-up" style="margin-left:20px;margin-top:20px;">
+                            <a  class="me-4 thumbnail">
+                                <img th:src="@{${'photo/' +ds.HINH_SACH}}" alt="" class="img-fluid" id="image">
+                            </a>
+                        </div>
+                            <div class="cols-sm-6" style="margin-top:20px;margin-left: 20px;margin-right: 10px">
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <label  class="cols-sm-3 col-form-label">Tên đầu sách:</label>
+                                        <div class="cols-sm-6">
+                                            <input type="text" class="form-control" name="TEN_SACH" th:value="${ds.TEN_SACH}" style="width: 650px" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label  class="cols-sm-3 col-form-label">Hình ảnh:</label>
+                                        <div class="cols-sm-6">
+                                            <input class="form-control" type="file"  accept="image/*"  name="hinhsach"
+                                                   id="file" onchange="choosefile(this)" style="width: 650px">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label  class="cols-sm-3 col-form-label">Tóm tắt</label>
+                                        <div class="cols-sm-6">
+                                            <textarea class="form-control" style="height: 160px;width: 650px" name="TOM_TAT" type="text"th:utext="${ds.TOM_TAT}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                        <div class="d-md-flex post-entry-2 half">
+                            <div class="card-body">
+                                <div class="row mb-3" style="margin-left:20px;margin-right: 10px">
+                                    <label class="col-sm-2 col-form-label">Chủ đề:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" multiple="multiple" name="chu_de" required>
+                                            <option th:each="cds:${cdlist}"
+                                                    th:value="${cds.ID_CD}"
+                                                    th:text="${cds.TEN_CD}"
+                                                    th:selected="${cdids.indexOf(cds.ID_CD)!=-1}">
+
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" style="margin-left:20px;margin-right: 10px">
+                                    <label  class="col-sm-2 col-form-label" >Chủ đề khác:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="chudekhac" placeholder="Mỗi chủ đề cách nhau bởi 1 dấu chấm phẩy">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" style="margin-left:20px;margin-right: 10px">
+                                    <label class="col-sm-2 col-form-label">Thể loại:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" multiple="multiple" name="theloailist" required>
+                                            <option th:each="tls:${tllist}"
+                                                    th:value="${tls.ID_TL}"
+                                                    th:text="${tls.TEN_TL}"
+                                                    th:selected="${tlids.indexOf(tls.ID_TL)!=-1}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" style="margin-left:20px;margin-right: 10px">
+                                    <label  class="col-sm-2 col-form-label" >Thể loại khác:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="theloaikhac" placeholder="Mỗi thể loại cách nhau bởi 1 dấu chấm phẩy">
+                                    </div>
+                                </div>
+
+
+                                    <button type="submit" class="btn btn-dark" style="margin-right: 20px; float:right">Xác nhận</button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer th:replace="fragments :: footer" >
+</footer>
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+    function choosefile(fileInput){
+        if(fileInput.files && fileInput.files[0]){
+            var r = new FileReader();
+
+            r.onload = function(e){
+                $('#image').attr('src',e.target.result);
+            }
+            r.readAsDataURL(fileInput.files[0]);
+        }
+    }
+</script>
+</body>
+
+</html>

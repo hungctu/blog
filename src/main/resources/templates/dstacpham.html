@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>ZenBlog Bootstrap Template - Index</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <!-- Template Main CSS Files -->
+  <link href="assets/css/variables.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: ZenBlog - v1.3.0
+  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+  * Author: BootstrapMade.com
+  * License: https:///bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+    <a th:href="@{/index}" class="logo d-flex align-items-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1>ZenBlog</h1>
+    </a>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a th:href="@{/index}">Trang chủ</a></li>
+        <li><a th:href="@{/danhsachcd}">Chủ đề</a></li>
+        <li><a th:href="@{/danhsachtl}">Thể loại</a></li>
+        <li class="dropdown"><a href="#">
+          <img th:src="@{${'photo/' +nguoidung.getHinh_ND()}}" alt="" style="height: 30px;width: 30px" class="rounded-circle"></a>
+
+          <ul>
+            <li><a th:href="@{/ttnguoidung(userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">Thông tin người dùng</a></li>
+            <li><a th:href="@{/dsdausach(userid=${nguoidung.ID_NGUOI_DUNG},username=${nguoidung.TEN_DANG_NHAP})}">Danh sách đầu sách</a></li>
+            <li>
+              <a href="javascript: document.logoutform.submit()">Đăng xuất</a>
+              <form name="logoutform" th:action="@{/logout}" method="post" th:hiden="true">
+                <input hidden type="submit" value="Đăng xuất">
+              </form>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav><!-- .navbar -->
+
+    <div class="position-relative">
+      <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+      <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+      <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+      <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+
+      <!-- ======= Search Form ======= -->
+      <div class="search-form-wrap js-search-form-wrap">
+        <form th:action="@{/timkiem}" method="get" class="search-form">
+          <button style="border:none;background-color:white" type="submit" class="icon bi-search"></button>
+          <input type="text" name="timkiem" placeholder="Search" class="form-control">
+          <button class="btn js-search-close" type="submit"><span class="bi-x"></span></button>
+        </form>
+      </div><!-- End Search Form -->
+
+    </div>
+
+  </div>
+
+</header><!-- End Header -->
+
+<main id="main" th:each="nd:${nguoidung}">
+		
+	 <section class="section">
+      <div class="row">
+	  <center>
+		
+        <div class="col-lg-8">
+			<div>
+				  <nav>
+					<ol class="breadcrumb">
+					  <li class="breadcrumb-item"><a th:href="@{/index}">Trang chủ</a></li>
+					  <li class="breadcrumb-item">Danh sách bài viết</li>
+					</ol>
+				  </nav>
+			</div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Danh sách bài viết</h5>
+
+              <!-- General Form Elements -->
+
+                <div class="row mb-3">
+                  <div class="col-sm-10">
+                    <a th:href="@{/themdausach(userid=${nd.ID_NGUOI_DUNG},username=${nd.TEN_DANG_NHAP})}">
+                     <button class="btn btn-primary" style="float:left">Thêm bài viết</button>
+                    </a>
+                  </div>
+                </div>
+
+			  <table class="table table-striped" >
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+					<th scope="col">Hình đại diện</th>
+                    <th scope="col">Tên fanfic</th>
+                    <th scope="col">Số Chap</th>
+                    <th scope="col">Ngày cập nhật gần nhất</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="dsdausach:${nd.getDausaches()}">
+                    <th scope="row" th:text="${nd.getDausaches().indexOf(dsdausach)+1}"></th>
+					<td style="width:20%">
+					   <img th:src="@{${'photo/' +dsdausach.HINH_SACH}}" alt="" style="width:30%">
+					</td>
+                    <td th:text="${dsdausach.TEN_SACH}"></td>
+                    <td th:text="${dsdausach.getChapters().size()}"> chaps</td>
+                    <td th:text="${#dates.format(dsdausach.getChapters().get(dsdausach.getChapters().size()-1).getNGAY_DANG(),'dd/MMM/yyyy')}"></td>
+                    <td>
+                      <a th:href="@{/chitietds(dsid=${dsdausach.ID_SACH},userid=${nd.ID_NGUOI_DUNG},username=${nd.TEN_DANG_NHAP})}">
+                          <button type="button" class="btn btn-primary btn-sm">Chi tiết</button>
+                      </a>
+                      <a th:href="@{/suadausach(dsid=${dsdausach.ID_SACH},userid=${nd.ID_NGUOI_DUNG},username=${nd.TEN_DANG_NHAP})}">
+                        <button type="button" class="btn btn-primary btn-sm">Cập nhật</button>
+                      </a>
+                      <a th:href="@{/dsdausach/capnhattt(dsid=${dsdausach.ID_SACH},userid=${nd.ID_NGUOI_DUNG},username=${nd.TEN_DANG_NHAP})}">
+                        <button type="button" class="btn btn-primary btn-sm" th:if="${dsdausach.TRANG_THAI}==1" th:text="Ẩn"/>
+                        <button type="button" class="btn btn-primary btn-sm" th:unless="${dsdausach.TRANG_THAI}==1" th:text="Hiện"/>
+                      </a>
+					</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+		</center>
+      </div>
+    </section>
+  </main>
+  <!-- ======= Footer ======= -->
+<footer th:replace="fragments :: footer" >
+</footer>
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  
+  <script src="assets1/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets1/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets1/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets1/vendor/echarts/echarts.min.js"></script>
+  <script src="assets1/vendor/quill/quill.min.js"></script>
+  <script src="assets1/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets1/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets1/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets1/js/main.js"></script>
+</body>
+
+</html>

@@ -23,3 +23,4 @@ To install and run the website, you can follow these steps:
    * spring.datasource.username= database username
    * spring.datasource.password= database password
 5. Run the `main` method in the `WfanficApplication` class.
+6. The website will be hosted on your local machine at `http://localhost:8080`.

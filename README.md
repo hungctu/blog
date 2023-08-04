@@ -18,7 +18,7 @@ To install and run the website, you can follow these steps:
 1. Clone the repository from GitHub.
 2. Open the project in your IDE.
 3. Immport the file fanfic.sql in the database folder into mysql workbench
-4. Open file blob/src/main/resources/application.properties and edit:
+4. Open file blog/src/main/resources/application.properties and edit:
    * spring.datasource.url=jdbc: database url
    * spring.datasource.username= database username
    * spring.datasource.password= database password

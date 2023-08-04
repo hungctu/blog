@@ -20,7 +20,7 @@ To install and run the website, you can follow these steps:
 3. Immport the file fanfic.sql in the database folder into mysql workbench
 4. Open file blog/src/main/resources/application.properties and edit:
    * spring.datasource.url=jdbc: database url
-   * spring.datasource.username= database username
-   * spring.datasource.password= database password
+   * spring.datasource.username= username
+   * spring.datasource.password= password
 5. Run the `main` method in the `WfanficApplication` class.
 6. The website will be hosted on your local machine at `http://localhost:8080`.

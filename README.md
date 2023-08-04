@@ -19,7 +19,7 @@ To install and run the website, you can follow these steps:
 2. Open the project in your IDE.
 3. Immport the file fanfic.sql in the database folder into mysql workbench
 4. Open file blob/src/main/resources/application.properties and edit:
-   *spring.datasource.url=jdbc: <database url>
-   *spring.datasource.username= <database username>
-   *spring.datasource.password= <database password>
+   * spring.datasource.url=jdbc: <database url>
+   * spring.datasource.username= <database username>
+   * spring.datasource.password= <database password>
 5. Run the `main` method in the `WfanficApplication` class.
